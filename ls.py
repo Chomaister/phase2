@@ -9,12 +9,14 @@ import math as math
 # Ordinary Least Squares
 class LeastSquares:
     def fit(self,X,y):
-        self.w = solve(X.T@X, X.T@y)
-        print(X.T@X, X.T@y)
-        print(self.w)
+        self.w = solve(X.T@X - 2 * np.identity(X.shape[1]), X.T@y)
+        #print(X.T@X, X.T@y)
+        #print(self.w)
         
     def predict(self, X):
+        print(self.w)
         return X@self.w
+
 
 # Least squares where each sample point X has a weight associated with it.
 # inherits the predict() function from LeastSquares
@@ -25,6 +27,7 @@ class WeightedLeastSquares(LeastSquares):
     def predict(self, X):
         return X@self.w
 
+#!!! Do not use this. incomplete
 class LinearModelGradient(LeastSquares):
 
     def fit(self,X,y):
