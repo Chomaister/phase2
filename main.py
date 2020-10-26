@@ -14,7 +14,7 @@ from sklearn.metrics import mean_squared_error
 
 import os
         
-df = pd.read_csv("phase1_training_data.csv")
+df = pd.read_csv("phase2_training_data.csv")
 #print(df)
 
 
@@ -24,7 +24,7 @@ errors = {}
 #Calculate absolute and squared error
 def get_error(ypred):
     yreal = [23, 26, 11, 16, 28, 23, 5, 14, 27, 10, 35]
-    #yreal = [54, 63, 75, 85, 97, 113, 129, 135, 147, 149]
+    #yreal = [25, 25, 25, 25, 25]
     e = 0
     ab = 0
     sq = 0
@@ -65,8 +65,8 @@ for country in countries:
         Z[i+auto_start] = dCases[i+auto_start:i+auto_end]
     y = dDeaths[-auto_start:]
 
-    Zpredict = np.empty((11, auto_end - auto_start))
-    for i in range(N, N+11):
+    Zpredict = np.empty((5, auto_end - auto_start))
+    for i in range(N, N+5):
         Zpredict[i-N] = dCases[i+auto_start:i+auto_end]
         #if len(dCases[i+auto_start:i+auto_end]) >= 11:
         #    Zpredict[i-N] = dCases[i+auto_start:i+auto_end]
@@ -77,6 +77,7 @@ for country in countries:
     ypred = ls.predict(Zpredict)
     preds[country] = ypred
 
+"""
     e = get_error(ypred)
     print(country, e)
     errors[country] = e
@@ -86,11 +87,13 @@ for n in errors.keys():
     if errors[n] == minerror:
         print(n)
 
-print(min(errors.values()))
 
+print(min(errors.values()))
+"""
 print(preds["PY"])
 arr = preds["PY"]
-sum = 9481
+
+sum = 9922
 for val in arr:
     sum += val
     print(sum)
@@ -103,26 +106,16 @@ min_sq = min([i[1] for i in errors.values()])
 country_abs = None
 country_sq = None
 
-
 for n in errors.keys():
     if errors[n][0] == min_abs:
         country_abs = n
     if errors[n][1] == min_sq:
         country_sq = n
 
-
-
 print("Mininum absolute difference in error: {}, {}".format(country_abs, min_abs))
 print("Mininum squared difference in error: {}, {}".format(country_sq, min_sq))
 """
-
-
-
-
 #output = pd.DataFrame(errors)
 #output.to_csv(r"C:/Users/Ethan Cho/Desktop/CPSC340/Midterm2020Fall/phase2>")
-
-
-
 # You can write up to 5GB to the current directory (/kaggle/working/) that gets preserved as output when you create a version using "Save & Run All" 
 # You can also write temporary files to /kaggle/temp/, but they won't be saved outside of the current session
